@@ -1,6 +1,10 @@
+import Maps.*;
+import Model.*;
+import UI.*;
+import javafx.application.Application;
 
 public class World {
     public static void main(String[] args){
-        System.out.println("yalla habibi");
+        Application.launch(SimulationApp.class, args);
     }
 }

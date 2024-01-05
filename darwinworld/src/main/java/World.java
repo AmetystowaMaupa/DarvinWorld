@@ -13,6 +13,6 @@ public class World {
         System.out.println(dir);
         dir = dir.rotation(3);
         System.out.println(dir);
-//        Application.launch(SimulationApp.class, args);
+        Application.launch(SimulationApp.class, args);
     }
 }

@@ -2,6 +2,7 @@ package UI;
 
 import Maps.BasicMap;
 import Maps.MapVisualizer;
+import Maps.TunnelMap;
 import Maps.WorldMap;
 import Model.Vector2d;
 import javafx.fxml.FXML;
@@ -21,7 +22,7 @@ public class SimulationPresenter{
     }
 
     public void drawMap(WorldMap map){
-        map = new BasicMap(10,10);
+        map = new TunnelMap(3,10,10);
         Label label = new Label(new MapVisualizer(map).draw(new Vector2d(0,0), new Vector2d(10,10)));
         mapGrid.add(label, 0,0);
     }

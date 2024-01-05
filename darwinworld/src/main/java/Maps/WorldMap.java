@@ -1,5 +1,7 @@
 package Maps;
 
+import Model.Animal;
+import Model.Directions;
 import Model.Vector2d;
 import Model.WorldElement;
 
@@ -18,13 +20,13 @@ public interface WorldMap extends MoveValidator {
      * @param animal The animal to place on the map.
      * @return True if the animal was placed. The animal cannot be placed if the move is not valid.
      */
-    //void place(Animal animal) throws PositionAlreadyOccupiedException;
+    void place(Animal animal);
 
     /**
      * Moves an animal (if it is present on the map) according to specified direction.
      * If the move is not possible, this method has no effect.
      */
-    //void move(Animal animal, MoveDirection direction) throws PositionAlreadyOccupiedException;
+    void move(Animal animal, Directions direction) ;
 
     /**
      * Return true if given position on the map is occupied. Should not be

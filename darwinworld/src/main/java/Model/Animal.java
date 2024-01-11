@@ -14,11 +14,12 @@ public class Animal implements WorldElement {
     private Directions orientation;
     private Genome genome = new Genome();
     private Gene currGene;
-    public Animal(List<Integer> gens){
+    public Animal(List<Integer> gens,int energy){
         for (int i = 0; i < gens.size(); i++){
             genome.addGene(gens.get(i));
         }
         currGene = genome.getHead();
+        this.energy = energy;
     }
     public void move(int type){
         if (type == 0){

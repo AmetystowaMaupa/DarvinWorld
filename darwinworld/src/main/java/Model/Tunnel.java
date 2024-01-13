@@ -1,6 +1,8 @@
 package Model;
 
 
+import Observers.ElementChangeObserver;
+
 import java.util.List;
 
 public class Tunnel implements WorldElement{
@@ -42,5 +44,34 @@ public class Tunnel implements WorldElement{
     @Override
     public String toString() {
         return "O";
+    }
+
+    @Override
+    public boolean isAnimal() {
+        return false;
+    }
+
+    @Override
+    public Vector2d getPosition() {
+        return entry1;
+    }
+
+    @Override
+    public Directions getOrientation() {
+        return null;
+    }
+
+    @Override
+    public int getImageIdx() {
+        return 0;
+    }
+
+    @Override
+    public void setObserver(ElementChangeObserver observer) {
+
+    }
+    @Override
+    public int getActiveGenome() {
+        return 0;
     }
 }

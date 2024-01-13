@@ -2,6 +2,7 @@ package Model;
 
 import Maps.WorldMap;
 import Model.Genome.Genome;
+import Observers.ElementChangeObserver;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,5 +23,35 @@ public class Animal implements WorldElement {
     @Override
     public String toString(){
         return orientation.toString();
+    }
+
+    @Override
+    public boolean isAnimal() {
+        return true;
+    }
+
+    @Override
+    public Vector2d getPosition() {
+        return null;
+    }
+
+    @Override
+    public Directions getOrientation() {
+        return null;
+    }
+
+    @Override
+    public int getImageIdx() {
+        return 0;
+    }
+
+    @Override
+    public void setObserver(ElementChangeObserver observer) {
+
+    }
+
+    @Override
+    public int getActiveGenome() {
+        return 0;
     }
 }

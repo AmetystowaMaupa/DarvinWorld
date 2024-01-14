@@ -2,12 +2,13 @@ package Model;
 
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class OptionReader {
-    private static final String CSV_FILE = "C:/Users/Piotr/Desktop/study/DarvinWorld/darwinworld/src/main/resources/config.csv";
+    private static final String CSV_FILE = String.valueOf(Paths.get(System.getProperty("user.dir"),"darwinworld","src","main","resources","config.csv"));
     private static final String CSV_SPLIT_BY = ",";
 
     public static List<String[]> read() throws FileNotFoundException {

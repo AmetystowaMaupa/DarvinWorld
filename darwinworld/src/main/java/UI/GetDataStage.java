@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 
 public class GetDataStage {
     private final Stage stage;
@@ -20,7 +21,7 @@ public class GetDataStage {
 
     public GetDataStage() throws FileNotFoundException {
         this.stage = new Stage();
-        stage.getIcons().add(new Image(new FileInputStream("C:/Users/Piotr/Desktop/study/DarvinWorld/darwinworld/src/main/resources/world.png")));
+        stage.getIcons().add(new Image(new FileInputStream(String.valueOf(Paths.get(System.getProperty("user.dir"),"darwinworld","src","main","resources","world.png")))));
         stage.setTitle("About unusual adventures with evolution");
         stage.setScene(new Scene(borderPane, 880, 500));
         stage.show();

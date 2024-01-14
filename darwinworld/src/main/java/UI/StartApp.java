@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 
 public class StartApp {
     private final Stage stage;
@@ -46,7 +47,7 @@ public class StartApp {
         Scene sceneMain = new Scene(borderPane);
         stage.setScene(sceneMain);
         stage.show();
-        stage.getIcons().add(new Image(new FileInputStream("C:/Users/Piotr/Desktop/study/DarvinWorld/darwinworld/src/main/resources/world.png")));
+        stage.getIcons().add(new Image(new FileInputStream(String.valueOf(Paths.get(System.getProperty("user.dir"),"darwinworld","src","main","resources","world.png")))));
         stage.setTitle("Darwin's World");
 
         Label tittle = new Label("Darwin's World simulation ");

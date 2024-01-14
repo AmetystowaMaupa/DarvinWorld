@@ -47,6 +47,14 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
         }
     }
 
+
+    @Override
+    public void moveAnimals(){
+        for (Animal animal : animalsList){
+            MoveTuple posChange = animal.move();
+            positionChanged(posChange.oldPosition,posChange.newPosition,animal);
+        }
+    }
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition, WorldElement object) {
         if (elements.containsKey(oldPosition) && elements.containsKey(newPosition)) {
@@ -127,7 +135,7 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
             elements.get(position).placeObject(object);
             animalsNumber += 1;
             animalsList.add((Animal) object);
-            //object.setObserver(this);
+            object.setObserver(this);
         }
     }
 

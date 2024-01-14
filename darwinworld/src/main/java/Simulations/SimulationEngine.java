@@ -161,15 +161,15 @@ public class SimulationEngine implements Runnable {
     }
 
     private void initSimulation() {
-
-        for (int i = 0; i < settings.getStartAnimalsQuantity(); i++) {
-            //new Animal(drawPosition(), settings, currentDay);
-        }
         map.growGrass(settings.getStartGrassQuantity());
-
         System.out.println(settings.getMap().toString());
     }
-
+    private void putAnimals(){
+        for (int i = 0; i < settings.getStartAnimalsQuantity(); i++) {
+            Animal a = new Animal(drawPosition(), settings, currentDay, List.of(0,1,2,3,7,3,2), settings.getStartAnimalEnergy());
+            map.place(a);
+        }
+    }
     public void run() {
         if (currentDay == 0) {
             try {
@@ -179,6 +179,7 @@ public class SimulationEngine implements Runnable {
             }
             System.out.println("start simulation:");
             initSimulation();
+//            putAnimals();
             observer.SimulationStep();
         }
         while (isSimulationNotOver() && isActive) {

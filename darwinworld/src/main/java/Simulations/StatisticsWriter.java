@@ -3,6 +3,7 @@ package Simulations;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Calendar;
 
 public class StatisticsWriter {
@@ -48,7 +49,7 @@ public class StatisticsWriter {
         date += calendar.get(Calendar.MINUTE);
         date += calendar.get(Calendar.SECOND);
 
-        SETTINGS_FILE = "C:/Users/Piotr/Desktop/study/DarvinWorld/darwinworld/src/main/statistics/" + name + "_" + date;
+        SETTINGS_FILE = String.valueOf(Paths.get(System.getProperty("user.dir"),"darwinworld","src","main","resources")) + name + "_" + date;
         if (new File(SETTINGS_FILE).exists()) {
             throw new Exception("this simulation already exist");
         }

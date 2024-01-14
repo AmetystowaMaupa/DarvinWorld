@@ -17,13 +17,14 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class App extends Application {
     private final BorderPane border = new BorderPane();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.getIcons().add(new Image(new FileInputStream("C:/Users/Piotr/Desktop/study/DarvinWorld/darwinworld/src/main/resources/world.png")));
+        primaryStage.getIcons().add(new Image(new FileInputStream(String.valueOf(Paths.get(System.getProperty("user.dir"),"darwinworld","src","main","resources","world.png")))));
         primaryStage.setTitle("Darwin's World");
         primaryStage.alwaysOnTopProperty();
         primaryStage.setScene(new Scene(border, 880, 460));

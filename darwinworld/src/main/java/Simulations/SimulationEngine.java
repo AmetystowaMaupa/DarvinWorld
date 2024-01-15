@@ -35,21 +35,11 @@ public class SimulationEngine implements Runnable {
         this.observer = observer;
     }
 
-    /*private void moveAnimals() {
-        List<Animal> animals = new LinkedList<>();
-        for (MapSquare square : map.elements.values()) {
-            for (WorldElement element : square.getObjects()) {
-                if (element.isAnimal()) {
-                    animals.add(((Animal) element));
-                }
-            }
-        }
-        for (Animal animal : animals) {
-            animal.move();
-        }
+    private void moveAnimals() {
+        map.moveAnimals();
     }
 
-    private Animal findAlfaAnimal(MapSquare square) {
+    /*private Animal findAlfaAnimal(MapSquare square) {
         Animal alfaAnimal = null;
         for (WorldElement element : square.getObjects()) {
             if (element.isAnimal()) {
@@ -170,7 +160,7 @@ public class SimulationEngine implements Runnable {
     }
     private void putAnimals(int AnimalQuantity){
         for (int i = 0; i < AnimalQuantity; i++) {
-            Animal newAnimal = new Animal(drawPosition(), settings, currentDay, List.of(0), settings.getStartAnimalEnergy());
+            Animal newAnimal = new Animal(drawPosition(), settings, currentDay, List.of(0,1,2,3,4), settings.getStartAnimalEnergy());
             map.place(newAnimal);
         }
     }
@@ -189,7 +179,7 @@ public class SimulationEngine implements Runnable {
             try {
                 currentDay += 1;
                 settings.getMap().updatePreferredPositions();
-                //moveAnimals();
+                moveAnimals();
                 //eatGrass();
                 //animalsReproduction();
                 growGrass();

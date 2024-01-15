@@ -30,32 +30,14 @@ public class Animal implements WorldElement {
     }
     public MoveTuple move(){
         MoveTuple oldnew = new MoveTuple();
-        oldnew.oldPosition = this.position;
-//        if (type == 0){
-            executeMove();
-            currGene = currGene.next;
-//        } else{
-//            Random rng = new Random();
-//            int t = rng.nextInt(100) + 1;
-//            if (t <= 80){
-//                orientation.rotation(currGene.getGene());
-//                executeMove();
-//                currGene = currGene.next;
-//            } else{
-//                int jump = rng.nextInt(genome.getLen());
-//                for (int i=0;i<jump;i++){
-//                    currGene = currGene.next;
-//                }
-//            }
-            executeMove();
-            currGene = currGene.next;
-//        }
-        oldnew.newPosition = this.position;
+        oldnew.oldPosition = position;
+        System.out.println(currGene.getGene());
+        position = position.add(orientation.dirToVector());
+        orientation = orientation.rotation(currGene.getGene());
+        currGene = currGene.next;
+        System.out.println(currGene.getGene());
+        oldnew.newPosition = position;
         return oldnew;
-    }
-    public void executeMove(){
-        orientation.rotation(currGene.getGene());
-        position.add(orientation.dirToVector());
     }
     @Override
     public String toString(){

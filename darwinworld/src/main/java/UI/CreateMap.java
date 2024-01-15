@@ -114,7 +114,8 @@ public class CreateMap {
                         VBox box = new VBox(3, imageView, posit);
                         box.setAlignment(Pos.CENTER);
 
-                        gridPane.add(box,animal.getPosition().getX(),animal.getPosition().getY());
+                        gridPane.add(box,i,j);
+                        GridPane.setHalignment(box, Pos.CENTER.getHpos());
                         /*ProgressBar lifeBar = picturesAnimal.energyInAnimal();
                         lifeBar.setPrefHeight(80 / (size));
                         lifeBar.setPrefWidth(600 / (1.5 * size * howMany));

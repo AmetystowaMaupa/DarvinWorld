@@ -12,7 +12,6 @@ public class Genome {
     public Gene getHead() {
         return head;
     }
-
     public int getLen() {
         return len;
     }

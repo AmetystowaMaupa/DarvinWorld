@@ -1,8 +1,5 @@
-import UI.*;
+import UI.App;
 import javafx.application.Application;
-
-import java.io.File;
-
 
 public class World {
     /*public static void main(String[] args) {

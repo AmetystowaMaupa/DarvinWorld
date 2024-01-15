@@ -12,6 +12,6 @@ import Model.WorldElement;
  */
 public interface WorldMap {
 
-    void place(WorldElement animal);
+    void place(Animal animal);
     void moveAnimals();
 }

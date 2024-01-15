@@ -63,7 +63,7 @@ public class Tunnel implements WorldElement{
 
     @Override
     public int getImageIdx() {
-        return 1;
+        return 0;
     }
 
     @Override

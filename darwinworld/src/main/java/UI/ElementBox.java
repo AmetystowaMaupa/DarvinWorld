@@ -12,6 +12,10 @@ public class ElementBox {
     private final WorldElement element;
     private final SimulationEngine engine;
 
+    public SimulationEngine getEngine() {
+        return engine;
+    }
+
     public ElementBox(WorldElement element, SimulationEngine engine) {
         this.element = element;
         this.engine = engine;

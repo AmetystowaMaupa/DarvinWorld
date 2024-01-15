@@ -27,6 +27,10 @@ public class SimulationEngine implements Runnable {
         stats = new Statistics(this);
     }
 
+    public SimulationObserver getObserver() {
+        return observer;
+    }
+
     public void setObserver(SimulationObserver observer) {
         this.observer = observer;
     }
@@ -162,12 +166,12 @@ public class SimulationEngine implements Runnable {
 
     private void initSimulation() {
         map.growGrass(settings.getStartGrassQuantity());
-        System.out.println(settings.getMap().toString());
+        putAnimals(settings.getStartAnimalsQuantity());
     }
-    private void putAnimals(){
-        for (int i = 0; i < settings.getStartAnimalsQuantity(); i++) {
-            Animal a = new Animal(drawPosition(), settings, currentDay, List.of(0,1,2,3,7,3,2), settings.getStartAnimalEnergy());
-            map.place(a);
+    private void putAnimals(int AnimalQuantity){
+        for (int i = 0; i < AnimalQuantity; i++) {
+            Animal newAnimal = new Animal(drawPosition(), settings, currentDay, List.of(0), settings.getStartAnimalEnergy());
+            map.place(newAnimal);
         }
     }
     public void run() {
@@ -179,7 +183,6 @@ public class SimulationEngine implements Runnable {
             }
             System.out.println("start simulation:");
             initSimulation();
-//            putAnimals();
             observer.SimulationStep();
         }
         while (isSimulationNotOver() && isActive) {

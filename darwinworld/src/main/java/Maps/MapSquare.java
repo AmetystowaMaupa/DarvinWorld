@@ -1,12 +1,13 @@
 package Maps;
 
+import Model.Animal;
 import Model.WorldElement;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapSquare {
-    private final ArrayList<WorldElement> objects;
+    private final ArrayList<Animal> objects;
     private boolean grass;
     private int deathCounter;
 
@@ -34,7 +35,7 @@ public class MapSquare {
         return deathCounter;
     }
 
-    public List<WorldElement> getObjects() {
+    public List<Animal> getObjects() {
         return objects;
     }
 
@@ -42,12 +43,16 @@ public class MapSquare {
         objects.remove(object);
     }
 
-    public void placeObject(WorldElement object) {
+    public void placeObject(Animal object) {
         objects.add(object);
     }
 
     public void animalDie(WorldElement animal) {
         removeObject(animal);
         increaseDeathCounter();
+    }
+    @Override
+    public String toString(){
+        return objects.toString();
     }
 }

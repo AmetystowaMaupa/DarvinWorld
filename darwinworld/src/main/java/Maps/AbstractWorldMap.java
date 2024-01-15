@@ -56,7 +56,7 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
         }
     }
     @Override
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition, WorldElement object) {
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition, Animal object) {
         if (elements.containsKey(oldPosition) && elements.containsKey(newPosition)) {
             elements.get(oldPosition).removeObject(object);
             elements.get(newPosition).placeObject(object);
@@ -129,13 +129,14 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
     }
 
     @Override
-    public void place(WorldElement object) {
+    public void place(Animal object) {
         Vector2d position = object.getPosition();
         if (inMap(position)) {
             elements.get(position).placeObject(object);
             animalsNumber += 1;
-            animalsList.add((Animal) object);
+            animalsList.add(object);
             object.setObserver(this);
+            System.out.println(elements.get(position).toString() + " " + position.toString());
         }
     }
 

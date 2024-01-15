@@ -69,7 +69,7 @@ public class Animal implements WorldElement {
 
     @Override
     public Vector2d getPosition() {
-        return null;
+        return position;
     }
 
     @Override
@@ -86,7 +86,6 @@ public class Animal implements WorldElement {
     public void setObserver(ElementChangeObserver observer) {
 
     }
-
     @Override
     public int getActiveGenome() {
         return currGene.getGene();

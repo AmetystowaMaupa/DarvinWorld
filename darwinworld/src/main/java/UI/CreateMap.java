@@ -85,15 +85,16 @@ public class CreateMap {
                     hbox.setAlignment(Pos.CENTER);
 
                     int howMany = square.getObjects().size();
-                    for (WorldElement animal : square.getObjects()) {
-                        switch (animal.getImageIdx()) {
-                            case 5 -> imageView = new ImageView(images.Image5);
-                            case 4 -> imageView = new ImageView(images.Image4);
-                            case 3 -> imageView = new ImageView(images.Image3);
-                            case 2 -> imageView = new ImageView(images.Image2);
-                            case 1 -> imageView = new ImageView(images.Image1);
-                            default -> throw new IllegalStateException("Unexpected value: ");
-                        }
+                    for (Animal animal : square.getObjects()) {
+//                        switch (animal.getImageIdx()) {
+//                            case 5 -> imageView = new ImageView(images.Image5);
+//                            case 4 -> imageView = new ImageView(images.Image4);
+//                            case 3 -> imageView = new ImageView(images.Image3);
+//                            case 2 -> imageView = new ImageView(images.Image2);
+//                            case 1 -> imageView = new ImageView(images.Image1);
+//                            default -> throw new IllegalStateException("Unexpected value: ");
+//                        }
+                        imageView = new ImageView(images.Image1);
                         double imageHeight = 500 / (1.5 * size * howMany);
                         double imageWidth = 600 / (1.5 * size * howMany);
                         imageView.setFitHeight(imageHeight);
@@ -104,6 +105,16 @@ public class CreateMap {
                         posit.setFont(Font.font(20 / (0.2 * size)));
 
                         ElementBox picturesAnimal = new ElementBox(animal, engine);
+                        imageView = new ImageView(images.tunnelImage);
+                        double Height = 500 / (1.5 * size);
+                        double Width = 600 / (1.5 * size);
+                        imageView.setFitHeight(Height);
+                        imageView.setFitWidth(Width);
+
+                        VBox box = new VBox(3, imageView, posit);
+                        box.setAlignment(Pos.CENTER);
+
+                        gridPane.add(box,animal.getPosition().getX(),animal.getPosition().getY());
                         /*ProgressBar lifeBar = picturesAnimal.energyInAnimal();
                         lifeBar.setPrefHeight(80 / (size));
                         lifeBar.setPrefWidth(600 / (1.5 * size * howMany));

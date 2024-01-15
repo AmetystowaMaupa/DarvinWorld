@@ -22,6 +22,10 @@ public class TunnelMap extends AbstractWorldMap{
     }
 
     @Override
+    public boolean moveValidator(Vector2d destination){
+        return destination.getY() < upperRight.getY() && destination.getY() >= 0;
+    }
+    @Override
     public void updatePreferredPositions() {
 
     }

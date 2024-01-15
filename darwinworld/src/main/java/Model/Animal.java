@@ -1,5 +1,6 @@
 package Model;
 
+import Maps.MoveValidator;
 import Maps.WorldMap;
 import Model.Genome.Gene;
 import Model.Genome.Genome;
@@ -28,14 +29,14 @@ public class Animal implements WorldElement {
         currGene = genome.getHead();
         this.energy = energy;
     }
-    public MoveTuple move(){
+    public MoveTuple move(MoveValidator validator){
         MoveTuple oldnew = new MoveTuple();
         oldnew.oldPosition = position;
-        System.out.println(currGene.getGene());
-        position = position.add(orientation.dirToVector());
+        if (validator.moveValidator(position.add(orientation.dirToVector()))) {
+            position = position.add(orientation.dirToVector());
+        }
         orientation = orientation.rotation(currGene.getGene());
         currGene = currGene.next;
-        System.out.println(currGene.getGene());
         oldnew.newPosition = position;
         return oldnew;
     }

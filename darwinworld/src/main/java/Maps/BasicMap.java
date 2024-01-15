@@ -14,7 +14,10 @@ public class BasicMap extends AbstractWorldMap{
         emptyNotPreferred = getNotPreferred();
     }
 
-
+    @Override
+    public boolean moveValidator(Vector2d destination){
+        return destination.getY() < upperRight.getY() && destination.getY() >= 0;
+    }
     @Override
     public void updatePreferredPositions() {
     }

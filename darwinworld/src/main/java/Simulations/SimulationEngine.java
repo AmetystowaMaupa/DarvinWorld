@@ -160,7 +160,7 @@ public class SimulationEngine implements Runnable {
     }
     private void putAnimals(int AnimalQuantity){
         for (int i = 0; i < AnimalQuantity; i++) {
-            Animal newAnimal = new Animal(drawPosition(), settings, currentDay, List.of(0,1,2,3,4), settings.getStartAnimalEnergy());
+            Animal newAnimal = new Animal(drawPosition(), settings, currentDay, List.of(6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), settings.getStartAnimalEnergy());
             map.place(newAnimal);
         }
     }

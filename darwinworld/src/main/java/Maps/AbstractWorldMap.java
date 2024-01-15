@@ -6,7 +6,7 @@ import Observers.ElementChangeObserver;
 
 import java.util.*;
 
-public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserver {
+public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserver, MoveValidator {
     protected final Map<Vector2d, MapSquare> elements;
     private int animalsNumber;
     private int grassNumber;
@@ -14,7 +14,7 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
     private int lifeOfDeadAnimal = 0;
     protected final int mapSize;
     private final Vector2d lowerLeft;
-    private final Vector2d upperRight;
+    protected final Vector2d upperRight;
     private final MoveAllowed movementDetails;
     private final int reproductionEnergy;
     protected final List<Vector2d> preferredPositions = new ArrayList<>();
@@ -35,6 +35,8 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
         initMap(width, height);
 
     }
+    @Override
+    public abstract boolean moveValidator(Vector2d destination);
 
     private void initMap(int width, int height) {
         for (int i = 0; i < width; i++) {
@@ -51,7 +53,13 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
     @Override
     public void moveAnimals(){
         for (Animal animal : animalsList){
-            MoveTuple posChange = animal.move();
+            MoveTuple posChange = animal.move(this::moveValidator);
+            int newX = posChange.getNewPosition().getX() >= 0 ? posChange.getNewPosition().getX() % upperRight.getX() : upperRight.getX() + (posChange.getNewPosition().getX() % upperRight.getX());
+            int oldX = posChange.getOldPosition().getX() >= 0 ? posChange.getOldPosition().getX() % upperRight.getX() : upperRight.getX() + (posChange.getOldPosition().getX() % upperRight.getX());
+            Vector2d newCords = new Vector2d(newX,posChange.getNewPosition().getY());
+            Vector2d oldCords = new Vector2d(oldX,posChange.getOldPosition().getY());
+            posChange.setNewPosition(newCords);
+            posChange.setOldPosition(oldCords);
             positionChanged(posChange.oldPosition,posChange.newPosition,animal);
         }
     }

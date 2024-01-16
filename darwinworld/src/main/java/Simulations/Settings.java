@@ -72,15 +72,10 @@ public class Settings {
             case "Random" -> mutationVariant = new FullRandomGens(maximalMutationNumber, minimalMutationNumber);
             default -> throw new Exception("wrong mutationVariant configuration");
         }*/
-        MoveAllowed movementDetails = null;
-        switch (config[14]) {
-            case "Earth" -> movementDetails = new EarthMoveAllowed();
-            case "Tunnel" -> movementDetails = new TunnelMoveAllowed();
-            default -> throw new Exception("wrong movementDetails configuration");
-        }
+
         switch (config[15]) {
-            case "Earth" -> map = new BasicMap(mapWidth, mapHeight, movementDetails, reproductionLostEnergy);
-            case "Tunnel" -> map = new TunnelMap(numberOfTunnels,mapWidth, mapHeight, movementDetails, reproductionLostEnergy);
+            case "Earth" -> map = new BasicMap(mapWidth, mapHeight, reproductionLostEnergy);
+            case "Tunnel" -> map = new TunnelMap(numberOfTunnels,mapWidth, mapHeight, reproductionLostEnergy);
             default -> throw new Exception("wrong map configuration");
         }
     }

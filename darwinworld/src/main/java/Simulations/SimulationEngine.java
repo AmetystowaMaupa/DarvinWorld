@@ -190,6 +190,7 @@ public class SimulationEngine implements Runnable {
             }
             System.out.println(settings.getMap().toString()); // visualization
         }
+        System.out.println("stop");
     }
 
     public Settings getSettings() {

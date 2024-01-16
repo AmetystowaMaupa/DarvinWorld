@@ -50,9 +50,6 @@ public class GetDataStage {
         TextField maximalMutationNumber = new TextField("9");
         TextField genLength = new TextField("8");
         TextField grassPerDay = new TextField("8");
-
-        ChoiceBox<String> movementDetails = new ChoiceBox<>();
-        movementDetails.getItems().addAll("Earth", "Portal");
         ChoiceBox<String> animalMoving = new ChoiceBox<>();
         animalMoving.getItems().addAll("Predestination", "Craziness");
         ChoiceBox<String> mutationVariant = new ChoiceBox<>();
@@ -68,7 +65,7 @@ public class GetDataStage {
         listTextFieldRight.getChildren().addAll(name, mapWidth, mapHeight, startGrassQuantity, eatingGrassEnergy, grassPerDay, startAnimalsQuantity, startAnimalsEnergy, animalFullEnergy);
 
         VBox listTextFieldLeft = new VBox(10);
-        listTextFieldLeft.getChildren().addAll(reproductionEnergy, minimalMutationNumber, maximalMutationNumber, genLength, movementDetails, animalMoving, mutationVariant, mapVariant, numberOfTunnels);
+        listTextFieldLeft.getChildren().addAll(reproductionEnergy, minimalMutationNumber, maximalMutationNumber, genLength, animalMoving, mutationVariant, mapVariant, numberOfTunnels);
 
         Label nameLabel = new Label("Name: ");
         nameLabel.setStyle("-fx-font-family: 'Calibri'; -fx-font-size: 15 pt; -fx-text-fill: rgb(176,176,176); -fx-background-color: rgba(9,1,1,0.84);");
@@ -98,9 +95,7 @@ public class GetDataStage {
         genLengthLabel.setStyle("-fx-font-family: 'Calibri'; -fx-font-size: 15 pt; -fx-text-fill: rgb(176,176,176); -fx-background-color: rgba(9,1,1,0.84);");
         Label numberOfTunnelsLabel = new Label("Number Of Tunnel: ");
         numberOfTunnelsLabel.setStyle("-fx-font-family: 'Calibri'; -fx-font-size: 15 pt; -fx-text-fill: rgb(176,176,176); -fx-background-color: rgba(9,1,1,0.84);");
-        Label movementDetailsLabel = new Label("Movement Details:");
         String labelStyle = "-fx-font-family: 'Calibri'; -fx-font-size: 15 pt; -fx-text-fill: rgb(176,176,176); -fx-background-color: rgba(9,1,1,0.84);";
-        movementDetailsLabel.setStyle(labelStyle);
         Label animalMovingLabel = new Label("Animal Moving:");
         animalMovingLabel.setStyle(labelStyle);
         Label mutationVariantLabel = new Label("Mutation Variant:");
@@ -110,7 +105,7 @@ public class GetDataStage {
 
         VBox listOfLabelLeft = new VBox(18);
         VBox listOfLabelRight = new VBox(18);
-        listOfLabelLeft.getChildren().addAll(reproductionEnergyLabel, minimalMutationNumberLabel, maximalMutationNumberLabel, genLengthLabel, movementDetailsLabel, animalMovingLabel, mutationVariantLabel, mapVariantLabel, numberOfTunnelsLabel);
+        listOfLabelLeft.getChildren().addAll(reproductionEnergyLabel, minimalMutationNumberLabel, maximalMutationNumberLabel, genLengthLabel/*, movementDetailsLabel*/, animalMovingLabel, mutationVariantLabel, mapVariantLabel, numberOfTunnelsLabel);
         listOfLabelRight.getChildren().addAll(nameLabel, mapWidthLabel, mapHeightLabel, startGrassQuantityLabel, eatingGrassEnergyLabel, grassPerDayLabel, startAnimalsQuantityLabel, startAnimalsEnergyLabel, animalFullEnergyLabel);
 
 
@@ -164,7 +159,6 @@ public class GetDataStage {
             textFieldValues[9] = minimalMutationNumber.getText();
             textFieldValues[10] = maximalMutationNumber.getText();
             textFieldValues[11] = genLength.getText();
-            textFieldValues[14] = movementDetails.getValue();
             textFieldValues[13] = animalMoving.getValue();
             textFieldValues[12] = mutationVariant.getValue();
             textFieldValues[15] = mapVariant.getValue();

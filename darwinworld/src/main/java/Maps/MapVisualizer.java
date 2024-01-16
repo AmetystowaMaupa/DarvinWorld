@@ -7,6 +7,7 @@ public class MapVisualizer {
     private static final String GRASS_CELL = "*";
     private static final String PREFERRED_CELL = "P";
     private static final String CELL_SEGMENT = "|";
+    private static final String TUNNEL_CELL = "O";
     private final AbstractWorldMap map;
 
     public MapVisualizer(AbstractWorldMap map) {
@@ -37,7 +38,10 @@ public class MapVisualizer {
                         builder.append(GRASS_CELL);
                     } else if (map.getPreferred().contains(vec)) {
                         builder.append(PREFERRED_CELL);
-                    } else {
+                    }else if (square.isTunnel()){
+                        builder.append(TUNNEL_CELL);
+                    }
+                    else {
                         builder.append(EMPTY_CELL);
                     }
                 }

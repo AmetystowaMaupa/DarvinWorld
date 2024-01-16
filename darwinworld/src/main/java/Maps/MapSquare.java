@@ -10,10 +10,11 @@ public class MapSquare {
     private final ArrayList<Animal> objects;
     private boolean grass;
     private int deathCounter;
+    private boolean tunnel;
 
     public MapSquare() {
         this.grass = false;
-
+        this.tunnel = false;
         this.objects = new ArrayList<>();
         this.deathCounter = 0;
     }
@@ -23,6 +24,8 @@ public class MapSquare {
     public void growGrass() {
         grass = true;
     }
+    public void placeTunnel() {tunnel = true;}
+    public boolean isTunnel(){return tunnel;}
     public void eatGrass() {
         grass = false;
     }

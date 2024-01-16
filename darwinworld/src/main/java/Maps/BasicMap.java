@@ -4,8 +4,8 @@ import Model.Vector2d;
 import Model.WorldElement;
 
 public class BasicMap extends AbstractWorldMap{
-    public BasicMap(int width, int height, MoveAllowed movementDetails, int reproductionEnergy) {
-        super(width, height, movementDetails, reproductionEnergy);
+    public BasicMap(int width, int height, int reproductionEnergy) {
+        super(width, height, reproductionEnergy);
 
         float midY = (height - 1) / (float) 2;
 

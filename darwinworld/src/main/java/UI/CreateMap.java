@@ -164,6 +164,22 @@ public class CreateMap {
 
                         gridPane.add(box, i, j);
                         GridPane.setHalignment(box, Pos.CENTER.getHpos());
+                    }else if (Objects.requireNonNull(square).isTunnel()){
+                        Label posit = new Label(position.toString());
+                        posit.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-text-fill: #b0b0b0; -fx-background-color: rgba(9,1,1,0.84);");
+                        posit.setFont(Font.font(20 / (0.2 * size)));
+
+                        imageView = new ImageView(images.tunnelImage);
+                        double imageHeight = 500 / (1.5 * size);
+                        double imageWidth = 600 / (1.5 * size);
+                        imageView.setFitHeight(imageHeight);
+                        imageView.setFitWidth(imageWidth);
+
+                        VBox box = new VBox(3, imageView, posit);
+                        box.setAlignment(Pos.CENTER);
+
+                        gridPane.add(box, i, j);
+                        GridPane.setHalignment(box, Pos.CENTER.getHpos());
                     }
                 }
             }

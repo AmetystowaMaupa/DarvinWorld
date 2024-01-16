@@ -15,16 +15,14 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
     protected final int mapSize;
     private final Vector2d lowerLeft;
     protected final Vector2d upperRight;
-    private final MoveAllowed movementDetails;
     private final int reproductionEnergy;
     protected final List<Vector2d> preferredPositions = new ArrayList<>();
     protected List<Vector2d> emptyPreferred;
     protected List<Vector2d> emptyNotPreferred;
     protected final ArrayList<Animal> animalsList = new ArrayList<>();
 
-    protected AbstractWorldMap(int width, int height, MoveAllowed movementDetails, int reproductionEnergy) {
+    protected AbstractWorldMap(int width, int height, int reproductionEnergy) {
         elements = new HashMap<>();
-        this.movementDetails = movementDetails;
         this.reproductionEnergy = reproductionEnergy;
         mapSize = width * height;
         lowerLeft = new Vector2d(0, 0);
@@ -128,13 +126,6 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
         return position.precedes(upperRight) && position.follows(lowerLeft);
     }
 
-    public Vector2d newPosition(Vector2d oldPosition, Vector2d newPosition) {
-        return movementDetails.newPosition(oldPosition, newPosition, lowerLeft, upperRight);
-    }
-
-    public int moveEnergyLost(Vector2d position) {
-        return movementDetails.lotsEnergy(position, lowerLeft, upperRight, reproductionEnergy);
-    }
 
     @Override
     public void place(Animal object) {
@@ -177,6 +168,8 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
     private boolean isGrass(Vector2d position) {
         return elements.get(position).didGrassGrow();
     }
+
+    //private boolean isTunnel(Vector2d position) {return elements.get(position).}
 
     public void eatGrass(Vector2d position) {
         if (isGrass(position)) {

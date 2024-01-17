@@ -12,12 +12,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static java.lang.Math.min;
 
 public class CreateMap {
     private final SimulationEngine engine;
@@ -97,21 +101,22 @@ public class CreateMap {
                         imageView = new ImageView(images.Image1);
                         double imageHeight = 500 / (1.5 * size * howMany);
                         double imageWidth = 600 / (1.5 * size * howMany);
+                        Circle animalVis = new Circle(min(imageHeight,imageWidth)/2);
+                        animalVis.setFill(Color.hsb(0,1.0,(double) animal.getEnergy() / (double) animal.getSettings().getAnimalFullEnergy()));
                         imageView.setFitHeight(imageHeight);
                         imageView.setFitWidth(imageWidth);
-
                         Label posit = new Label(position.toString());
                         posit.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-text-fill: #b0b0b0; -fx-background-color: rgba(9,1,1,0.84);");
                         posit.setFont(Font.font(20 / (0.2 * size)));
 
                         ElementBox picturesAnimal = new ElementBox(animal, engine);
-                        imageView = new ImageView(images.tunnelImage);
+
                         double Height = 500 / (1.5 * size);
                         double Width = 600 / (1.5 * size);
                         imageView.setFitHeight(Height);
                         imageView.setFitWidth(Width);
 
-                        VBox box = new VBox(3, imageView, posit);
+                        VBox box = new VBox(3, animalVis, posit);
                         box.setAlignment(Pos.CENTER);
 
                         gridPane.add(box,i,j);

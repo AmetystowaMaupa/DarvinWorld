@@ -61,8 +61,7 @@ public class Settings {
         if(numberOfTunnels < 0 || numberOfTunnels > (mapWidth*mapHeight -1)/2){
             throw new Exception("wrong number of tunnels config");
         }
-
-        switch (config[12]) {
+        switch (config[13]) {
             case "Predestination" -> animalMoving = 0;
             case "Craziness" -> animalMoving = 1;
             default -> throw new Exception("wrong animalMoving configuration");

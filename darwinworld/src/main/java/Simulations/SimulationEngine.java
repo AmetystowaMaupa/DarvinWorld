@@ -3,6 +3,8 @@ package Simulations;
 import Maps.AbstractWorldMap;
 import Maps.MapSquare;
 import Model.*;
+import Model.Genome.GenerateGenome;
+import Model.Genome.Genome;
 import Observers.SimulationObserver;
 
 import java.io.IOException;
@@ -35,9 +37,6 @@ public class SimulationEngine implements Runnable {
         this.observer = observer;
     }
 
-    private void moveAnimals() {
-        map.moveAnimals();
-    }
 
     /*private Animal findAlfaAnimal(MapSquare square) {
         Animal alfaAnimal = null;
@@ -136,15 +135,7 @@ public class SimulationEngine implements Runnable {
     }
 
     public boolean isSimulationNotOver() {
-        /*for (MapSquare square : map.elements.values()) {
-            for (WorldElement element : square.getObjects()) {
-                if (element.isAnimal() && !((Animal) element).isDead()) {
-                    return true;
-                }
-            }
-
-        }*/
-        return true;
+        return map.isMapDead();
     }
 
     private Vector2d drawPosition() {
@@ -160,9 +151,21 @@ public class SimulationEngine implements Runnable {
     }
     private void putAnimals(int AnimalQuantity){
         for (int i = 0; i < AnimalQuantity; i++) {
-            Animal newAnimal = new Animal(drawPosition(), settings, currentDay, List.of(6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), settings.getStartAnimalEnergy());
+            Animal newAnimal = new Animal(drawPosition(), settings, currentDay, GenerateGenome.generateGenome(settings.getGenLength()), settings.getStartAnimalEnergy());
             map.place(newAnimal);
         }
+    }
+    private void moveAnimals(){
+        map.moveAnimals();
+    }
+    private void eatGrass(){
+        map.eatGrassAnimals();
+    }
+    private void animalsReproduction(int day){
+        map.animalsReproduce(day);
+    }
+    private void removeDead(){
+        map.animalDies();
     }
     public void run() {
         if (currentDay == 0) {
@@ -175,14 +178,16 @@ public class SimulationEngine implements Runnable {
             initSimulation();
             observer.SimulationStep();
         }
-        while (isSimulationNotOver() && isActive) {
+        while (isActive) {
             try {
                 currentDay += 1;
                 settings.getMap().updatePreferredPositions();
+                removeDead();
                 moveAnimals();
-                //eatGrass();
-                //animalsReproduction();
+                eatGrass();
+                animalsReproduction(currentDay);
                 growGrass();
+                isActive = !isSimulationNotOver();
                 observer.SimulationStep();
                 writer.save(stats);
             } catch (IOException e) {

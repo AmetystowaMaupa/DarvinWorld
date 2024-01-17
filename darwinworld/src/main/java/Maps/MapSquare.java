@@ -29,7 +29,12 @@ public class MapSquare {
     public void eatGrass() {
         grass = false;
     }
-
+    public Animal strongest(){
+        return objects.get(0);
+    }
+    public Animal secondStrongest(){
+        return objects.get(1);
+    }
     private void increaseDeathCounter() {
         deathCounter += 1;
     }

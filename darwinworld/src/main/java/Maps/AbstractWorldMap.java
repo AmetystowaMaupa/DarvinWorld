@@ -46,19 +46,25 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
             }
         }
     }
-
+    private Vector2d calcPosition(Vector2d position){
+        return new Vector2d(position.getX() >= 0 ? position.getX() % upperRight.getX() : upperRight.getX() + (position.getX() % upperRight.getX()), position.getY());
+    }
 
     @Override
     public void moveAnimals(){
         for (Animal animal : animalsList){
             MoveTuple posChange = animal.move(this::moveValidator);
-            int newX = posChange.getNewPosition().getX() >= 0 ? posChange.getNewPosition().getX() % upperRight.getX() : upperRight.getX() + (posChange.getNewPosition().getX() % upperRight.getX());
-            int oldX = posChange.getOldPosition().getX() >= 0 ? posChange.getOldPosition().getX() % upperRight.getX() : upperRight.getX() + (posChange.getOldPosition().getX() % upperRight.getX());
-            Vector2d newCords = new Vector2d(newX,posChange.getNewPosition().getY());
-            Vector2d oldCords = new Vector2d(oldX,posChange.getOldPosition().getY());
+            Vector2d newCords = calcPosition(posChange.newPosition);
+            Vector2d oldCords = calcPosition(posChange.oldPosition);
             posChange.setNewPosition(newCords);
             posChange.setOldPosition(oldCords);
             positionChanged(posChange.oldPosition,posChange.newPosition,animal);
+            animal.subEnergy();
+        }
+    }
+    public void eatGrassAnimals(){
+        for (Animal animal : animalsList){
+            eatGrass(animal);
         }
     }
     @Override
@@ -68,7 +74,20 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
             elements.get(newPosition).placeObject(object);
         }
     }
-
+    @Override
+    public void animalDies(){
+        List<Animal> toRemove = new ArrayList<>();
+        for (Animal animal : animalsList){
+            if (animal.getEnergy() <= 0) {
+                toRemove.add(animal);
+            }
+        }
+        for (Animal animal : toRemove){
+            animalsList.remove(animal);
+            elements.get(animal.getPosition()).getObjects().remove(animal);
+            animalsDead += 1;
+        }
+    }
     public abstract void updatePreferredPositions();
 
     public List<Vector2d> getPreferred() {
@@ -108,24 +127,27 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
         }
         return position;
     }
-
-    @Override
-    public void animalDies(WorldElement animal) {
-        Vector2d position = animal.getPosition();
-        if (elements.get(position).getObjects().contains(animal)) {
-            MapSquare square = elements.get(position);
-            square.animalDie(animal);
-            animalsList.remove((Animal) animal);
-            animalsNumber -= 1;
-            this.setAnimalsDead();
-            this.setLifeOfDeadAnimal((Animal) animal);
-        }
-    }
-
     public boolean inMap(Vector2d position) {
         return position.precedes(upperRight) && position.follows(lowerLeft);
     }
 
+    public void animalsReproduce(int day){
+        Set<Vector2d> alreadyReproduced = new HashSet<>();
+        List<Animal> newBabies = new ArrayList<>();
+        for (Animal animal : animalsList){
+            Vector2d position = calcPosition(animal.getPosition());
+            if (elements.get(position) != null && elements.get(position).getObjects() != null && !alreadyReproduced.contains(position) && elements.get(position).getObjects().size() > 1){
+                Animal animal1 = elements.get(position).strongest();
+                Animal animal2 = elements.get(position).secondStrongest();
+                alreadyReproduced.add(position);
+                Animal baby = new Animal(animal1, animal2, day);
+                newBabies.add(baby);
+            }
+        }
+        for (Animal baby : newBabies){
+            place(baby);
+        }
+    }
 
     @Override
     public void place(Animal object) {
@@ -171,9 +193,11 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
 
     //private boolean isTunnel(Vector2d position) {return elements.get(position).}
 
-    public void eatGrass(Vector2d position) {
-        if (isGrass(position)) {
-            deleteGrass(position);
+    public void eatGrass(Animal animal) {
+        Vector2d position = calcPosition(animal.getPosition());
+        if (elements.get(position).didGrassGrow()) {
+            animal.addEnergy();
+            deleteGrass(calcPosition(position));
         }
     }
 
@@ -208,5 +232,8 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
 
     public void setLifeOfDeadAnimal(Animal animal) {
         //this.lifeOfDeadAnimal = this.lifeOfDeadAnimal + animal.getLifeLength();
+    }
+    public boolean isMapDead(){
+        return animalsList.size() == 0 ? true : false;
     }
 }

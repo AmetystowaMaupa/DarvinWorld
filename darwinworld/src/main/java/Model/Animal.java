@@ -7,6 +7,7 @@ import Model.Genome.Genome;
 import Observers.ElementChangeObserver;
 import Simulations.Settings;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -16,9 +17,11 @@ public class Animal implements WorldElement {
     private int energy;
     private Directions orientation = Directions.N;
     private Genome genome = new Genome();
-    private Gene currGene;
+    public Gene currGene;
     private Settings settings;
-    private int birthday;
+    private final int birthday;
+    public final Animal father1;
+    public final Animal father2;
     public Animal(Vector2d pos, Settings settings, int day, List<Integer> gens,int energy){
         this.position = pos;
         this.settings = settings;
@@ -28,6 +31,54 @@ public class Animal implements WorldElement {
         }
         currGene = genome.getHead();
         this.energy = energy;
+        this.father1 = null;
+        this.father2 = null;
+    }
+    public Animal(Animal father1, Animal father2, int day){
+        this.position = father1.getPosition();
+        this.settings = father1.getSettings();
+        this.orientation = Directions.N;
+        this.birthday = day;
+        this.father1 = father1;
+        this.father2 = father2;
+        this.energy = 2 * settings.getReproductionLostEnergy() <= settings.getAnimalFullEnergy() ? 2 * settings.getReproductionLostEnergy() : settings.getAnimalFullEnergy();
+        this.genome = new Genome();
+        Random r = new Random();
+        boolean left = r.nextBoolean();
+        int domGenesLen = (int) (0.75 * settings.getGenLength());
+        int subGenesLen = (int) (0.25 * settings.getGenLength());
+        if (domGenesLen + subGenesLen != settings.getGenLength()){
+            domGenesLen += 1;
+        }
+        Gene p = father1.genome.getHead();
+        Gene q = father2.genome.getHead();
+        if (left){
+            for (int i = 0; i < domGenesLen; i++){
+                genome.addGene(p.getGene());
+                p = p.next;
+                q = q.next;
+            }
+            for (int i = 0; i < subGenesLen; i++){
+                genome.addGene(q.getGene());
+                q = q.next;
+            }
+        }
+        else {
+            for (int i = 0; i < subGenesLen; i++){
+                genome.addGene(q.getGene());
+                p = p.next;
+                q = q.next;
+            }
+            for (int i = 0; i < domGenesLen; i++){
+                genome.addGene(p.getGene());
+                p = p.next;
+            }
+        }
+        this.currGene = genome.getHead();
+    }
+    public boolean subEnergy(){
+        energy -= 1;
+        return energy < 0 ? true : false;
     }
     public MoveTuple move(MoveValidator validator){
         MoveTuple oldnew = new MoveTuple();
@@ -40,6 +91,14 @@ public class Animal implements WorldElement {
         oldnew.newPosition = position;
         return oldnew;
     }
+    public int getEnergy() {
+        return energy;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
     private Gene getNextGene(){
         if (settings.getAnimalMoving() == 0) {
             return currGene.next;
@@ -88,6 +147,14 @@ public class Animal implements WorldElement {
     @Override
     public void setObserver(ElementChangeObserver observer) {
 
+    }
+
+    public Genome getGenome() {
+        return genome;
+    }
+
+    public void addEnergy(){
+        energy = energy + settings.getEatingGrassEnergy() <= settings.getAnimalFullEnergy() ? energy + settings.getEatingGrassEnergy() : settings.getAnimalFullEnergy();
     }
     @Override
     public int getActiveGenome() {

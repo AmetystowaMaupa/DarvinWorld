@@ -1,9 +1,11 @@
 package Model.Genome;
 
+import java.util.Random;
+
 public class Genome {
     private Gene head;
     private Gene tail;
-    private int len;
+    private int len = 0;
     public Genome(){
         this.head = null;
         this.tail = null;

@@ -36,9 +36,29 @@ public class Animal implements WorldElement {
             position = position.add(orientation.dirToVector());
         }
         orientation = orientation.rotation(currGene.getGene());
-        currGene = currGene.next;
+        currGene = getNextGene();
         oldnew.newPosition = position;
         return oldnew;
+    }
+    private Gene getNextGene(){
+        if (settings.getAnimalMoving() == 0) {
+            return currGene.next;
+        }
+        else {
+            Random generator = new Random();
+            int roll = generator.nextInt(101) + 1;
+            if (roll <= 20){
+                int geneInd = generator.nextInt(genome.getLen());
+                Gene g = currGene;
+                for (int i = 0; i < geneInd; i++){
+                    g = g.next;
+                }
+                return g;
+            }
+            else {
+                return currGene.next;
+            }
+        }
     }
     @Override
     public String toString(){

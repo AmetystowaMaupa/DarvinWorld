@@ -17,7 +17,7 @@ public class Settings {
     private final int numberOfTunnels;
 
     private final AbstractWorldMap map;
-    //private final Move animalMoving;
+    private final int animalMoving;
     //private final IGenome mutationVariant;
 
     public Settings(String configName, String[] config) throws Exception {
@@ -62,11 +62,12 @@ public class Settings {
             throw new Exception("wrong number of tunnels config");
         }
 
-        /*switch (config[12]) {
-            case "Predestination" -> animalMoving = new FullPredestinationMove();
-            case "Craziness" -> animalMoving = new LittleCrazinessMove();
+        switch (config[12]) {
+            case "Predestination" -> animalMoving = 0;
+            case "Craziness" -> animalMoving = 1;
             default -> throw new Exception("wrong animalMoving configuration");
         }
+        /*
         switch (config[13]) {
             case "Correction" -> mutationVariant = new LittleCorrectionGens();
             case "Random" -> mutationVariant = new FullRandomGens(maximalMutationNumber, minimalMutationNumber);
@@ -129,10 +130,10 @@ public class Settings {
     }
     public int getNumberOfTunnels(){return numberOfTunnels;}
 
-    /*public IMove getAnimalMoving() {
+    public int getAnimalMoving() {
         return animalMoving;
     }
-
+    /*
     public IGenome getMutationVariant() {
         return mutationVariant;
     }*/

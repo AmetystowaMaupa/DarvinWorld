@@ -1,0 +1,3 @@
+name,numberofTunnels,mapWidth,mapHeight,startGrassQuantity,eatingGrassEnergy,grassPerDay,startAnimalsQuantity,startAnimalEnergy,animalFullEnergy,reproductionEnergy,minimalMutationNumber,maximalMutationNumber,genLength,animalMoving,mutationVariant,movementDetails,map
+2113My new configuration,20,15,5,1,8,15,10,15,5,2,9,8,Random,Predestination,null,Earth,0
+weeee,10,10,5,1,8,15,10,15,5,2,9,8,Random,Predestination,null,Tunnel,3

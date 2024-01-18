@@ -1,46 +1,63 @@
 package Maps;
 
 import Model.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TunnelMap extends AbstractWorldMap{
-
-    private final int height;
-    private final int width;
     private final int numberOfTunnels;
     private Map<Vector2d, Tunnel> tunnels = new HashMap<>();
-    public TunnelMap(int numberOfTunnels, int height, int width) {
-        super();
+
+    public TunnelMap(int numberOfTunnels, int width, int height, int reproductionEnergy) {
+        super(width, height, reproductionEnergy);
+        float midY = (height - 1) / (float) 2;
+
+        preferredPositions.sort((o1, o2) -> Float.compare(Math.abs(o1.getY() - midY), Math.abs(o2.getY() - midY)));
+        emptyPreferred = getPreferred();
+        emptyNotPreferred = getNotPreferred();
         this.numberOfTunnels = numberOfTunnels;
-        this.width = width;
-        this.height = height;
-        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(height, width, numberOfTunnels);
-        List<Vector2d> positions = new ArrayList<>();
-        for(Vector2d pos: randomPositionGenerator){
-            positions.add(pos);
+        List<Vector2d> positions = new LinkedList<>();
+        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(height,width,numberOfTunnels);
+        for(Vector2d tunnelPosition : randomPositionGenerator) {
+            positions.add(tunnelPosition);
         }
-        for(int i=0;i<positions.size();i+=2){
+        for(int i=0; i<positions.size();i+=2){
             Tunnel tunnel = new Tunnel(positions.get(i),positions.get(i+1));
-            tunnels.put(positions.get(i), tunnel);
-            tunnels.put(positions.get(i + 1), tunnel);
+            tunnels.put(tunnel.getEntry1(),tunnel);
+            tunnels.put(tunnel.getEntry2(),tunnel);
+            addTunnel(positions.get(i),positions.get(i+1));
+        }
+
+    }
+    @Override
+    public void moveAnimals(){
+        for (Animal animal : animalsList){
+            MoveTuple posChange = animal.move(this::moveValidator);
+            Vector2d newCords = calcPosition(posChange.newPosition);
+            Vector2d oldCords = calcPosition(posChange.oldPosition);
+            posChange.setNewPosition(newCords);
+            posChange.setOldPosition(oldCords);
+            Tunnel tunnel = tunnels.get(posChange.newPosition);
+            if (tunnel != null){
+                posChange.setNewPosition(tunnel.otherEntry(newCords));
+                animal.setPosition(tunnel.otherEntry(newCords));
+            }
+            positionChanged(posChange.oldPosition,posChange.newPosition,animal);
+            animal.subEnergy(3);
         }
     }
-
-
     @Override
-    public boolean isOccupied(Vector2d position) {
-        return animals.containsKey(position) || tunnels.containsKey(position);
+    public boolean moveValidator(Vector2d destination){
+        return destination.getY() < upperRight.getY() && destination.getY() >= 0;
     }
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        if (animals.containsKey(position))
-            return animals.get(position);
-        else
-            return tunnels.get(position);
+    public void updatePreferredPositions() {
+
+    }
+    private void addTunnel(Vector2d position1, Vector2d position2) {
+        MapSquare square1 = elements.get(position1);
+        MapSquare square2 = elements.get(position2);
+        square1.placeTunnel();
+        square2.placeTunnel();
     }
 
 }

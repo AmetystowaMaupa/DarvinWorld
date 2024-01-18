@@ -138,11 +138,13 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
                 Vector2d position = new Vector2d(i,j);
                 if (elements.get(position).getObjects().size() > 1){
                     Animal strongest = elements.get(position).strongest();
-                    Animal secondStronges = elements.get(position).secondStrongest();
-                    Animal baby = new Animal (strongest,secondStronges,day);
-                    place(baby);
-                    strongest.subEnergy(strongest.getSettings().getReproductionLostEnergy());
-                    secondStronges.subEnergy(secondStronges.getSettings().getReproductionLostEnergy());
+                    Animal secondStrongest = elements.get(position).secondStrongest();
+                    if (secondStrongest.getEnergy() > secondStrongest.getSettings().getReproductionLostEnergy()) {
+                        Animal baby = new Animal(strongest, secondStrongest, day);
+                        place(baby);
+                        strongest.subEnergy(strongest.getSettings().getReproductionLostEnergy());
+                        secondStrongest.subEnergy(secondStrongest.getSettings().getReproductionLostEnergy());
+                    }
                 }
             }
         }

@@ -34,7 +34,7 @@ public class StageWithCharts {
         stage.setOnCloseRequest(event -> this.stage.hide());
 
         Button exitButton = new Button("EXIT");
-        exitButton.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-font-size: 15 pt; -fx-text-fill: #30cbc8; -fx-background-color: rgba(8,56,65,0.84);");
+        exitButton.setStyle("-fx-font-family: 'Calibri'; -fx-font-size: 15 pt; -fx-text-fill: #ffffff; -fx-background-color: rgb(176,176,176);");
         exitButton.setAlignment(Pos.CENTER);
 
 
@@ -45,7 +45,7 @@ public class StageWithCharts {
         title.setFont(new Font(15));
         HBox mainDescription = new HBox(10, title, exitButton);
         mainDescription.setAlignment(Pos.CENTER);
-        borderPane.setBackground(new Background(new BackgroundFill(Color.PALETURQUOISE, CornerRadii.EMPTY, Insets.EMPTY)));
+        borderPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         BorderPane.setMargin(mainDescription, new Insets(20, 0, 20, 0));
         borderPane.setTop(mainDescription);
         BorderPane.setAlignment(mainDescription, Pos.CENTER);

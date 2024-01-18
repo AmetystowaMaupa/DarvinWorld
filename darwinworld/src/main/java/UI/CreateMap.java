@@ -154,9 +154,9 @@ public class CreateMap {
     private void setButtonOnAction(StackPane till, Animal animal, SimulationEngine engine) {
         till.setOnMouseClicked(event -> {
             if (!engine.isActive()) {
-                //app.setFollowingAnimal(animal);
-                //app.updateInfo();
-                System.out.println("stop");
+                app.setFollowingAnimal(animal);
+                app.updateInfo();
+                //System.out.println("stop");
             }
         });
     }

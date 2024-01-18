@@ -91,7 +91,7 @@ public class ElementInformation {
         dead.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-font-size: 15 pt; -fx-text-fill: #30cbc8; -fx-background-color: rgba(8,56,65,0.84);");
 */
         Button exitButton = new Button("EXIT");
-        exitButton.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-font-size: 15 pt; -fx-text-fill: #cb3054; -fx-background-color: rgba(8,56,65,0.84);");
+        exitButton.setStyle("-fx-font-family: 'Calibri'; -fx-font-size: 15 pt; -fx-text-fill: #cb3054; -fx-background-color: rgba(8,56,65,0.84);");
         exitButton.setAlignment(Pos.CENTER);
 
         exitButton.setOnAction(action -> {

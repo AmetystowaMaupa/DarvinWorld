@@ -40,65 +40,7 @@ public class Statistics {
         numberDeadAnimals = map.getAnimalsDead();
         worldDays = engine.getCurrentDay();
         freePositionQuantity = engine.getFreePositionQuantity();
-        //calculateAvgLifeLength();
-        //calculateAvgEnergy();
-        //calculateAvgChildren();
-        //findDominant();
     }
-
-    /*private void findDominant() {
-        List<Animal> animals = engine.getSettings().getMap().animalsList;
-        int[] counter = new int[8];
-        for (Animal animal : animals) {
-            counter[animal.getActiveGenome()] += 1;
-        }
-        int dominant = 0;
-        int maxGenotype = 0;
-        for (int i = 0; i < 8; i++) {
-            if (counter[i] > maxGenotype) {
-                maxGenotype = counter[i];
-                dominant = i;
-            }
-        }
-        this.dominantGenotype = dominant;
-    }
-
-    private void calculateAvgLifeLength() {
-        if (map.getAnimalsDead() != 0) {
-            avgLife = Math.round(map.getLifeOfDeadAnimal() / (double) map.getAnimalsDead() * 100) / 100.0;
-        }
-    }
-
-
-    private void calculateAvgEnergy() {
-        if (engine.getSettings().getMap().animalsList.size() != 0) {
-            int energy = 0;
-            for (Animal animal : engine.getSettings().getMap().animalsList) {
-                if (animal.getEnergy() > 0) {
-                    energy += animal.getEnergy();
-                }
-            }
-            avgEnergy = Math.round(energy / (double) numberAnimals * 100) / 100.0;
-        }
-        if (!engine.isSimulationNotOver()) {
-            avgEnergy = 0.0;
-        }
-    }
-
-    private void calculateAvgChildren() {
-        int numberOfChildren = 0;
-        List<Animal> animals = engine.getSettings().getMap().animalsList;
-        if (animals.size() == 0) {
-            this.avgChildren = 0;
-        } else {
-            for (Animal animal : animals) {
-                if (animal.getChildren() > 0) {
-                    numberOfChildren = numberOfChildren + animal.getChildren();
-                }
-            }
-            avgChildren = Math.round(numberOfChildren / (double) animals.size() * 100) / 100.0;
-        }
-    }*/
 
     public int getNumberAnimals() {
         return numberAnimals;

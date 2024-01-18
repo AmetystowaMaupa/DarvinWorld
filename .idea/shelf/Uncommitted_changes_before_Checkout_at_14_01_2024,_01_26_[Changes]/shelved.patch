@@ -1,0 +1,17 @@
+Index: darwinworld/src/main/java/Maps/Tile.java
+===================================================================
+diff --git a/darwinworld/src/main/java/Maps/Tile.java b/darwinworld/src/main/java/Maps/Tile.java
+deleted file mode 100644
+--- a/darwinworld/src/main/java/Maps/Tile.java	(revision 1acc220eed9167bb1ef836dafa00b70834de258c)
++++ /dev/null	(revision 1acc220eed9167bb1ef836dafa00b70834de258c)
+@@ -1,10 +0,0 @@
+-package Maps;
+-
+-import Model.Tunnel;
+-
+-public class Tile {
+-    private Tunnel tunnel = null;
+-    //lista zwierzaków
+-    //trawa
+-    //pozycja?
+-}

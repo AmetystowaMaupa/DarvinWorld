@@ -1,14 +1,12 @@
 package Model;
 
 import Maps.MoveValidator;
-import Maps.WorldMap;
 import Model.Genome.Gene;
 import Model.Genome.Genome;
 import Observers.ElementChangeObserver;
 import Simulations.Settings;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -34,6 +32,18 @@ public class Animal implements WorldElement,Comparable<Animal> {
         this.father1 = null;
         this.father2 = null;
     }
+    public Animal(List<Integer> gens,Settings s) throws Exception {
+        this.position = null;
+        this.settings = s;
+        this.birthday = 0;
+        for (int i = 0; i < gens.size(); i++){
+            genome.addGene(gens.get(i));
+        }
+        currGene = genome.getHead();
+        this.energy = 0;
+        this.father1 = null;
+        this.father2 = null;
+    }
     public Animal(Animal father1, Animal father2, int day){
         this.position = father1.getPosition();
         this.settings = father1.getSettings();
@@ -47,9 +57,6 @@ public class Animal implements WorldElement,Comparable<Animal> {
         boolean left = r.nextBoolean();
         int domGenesLen = (int) (0.75 * settings.getGenLength());
         int subGenesLen = (int) (0.25 * settings.getGenLength());
-        if (domGenesLen + subGenesLen != settings.getGenLength()){
-            domGenesLen += 1;
-        }
         int numMutations = r.nextInt(settings.getMaximalMutationNumber()+1) + settings.getMinimalMutationNumber();
         List<Integer> mutationPoints = new ArrayList<>();
         for (int i = 0; i < numMutations; i++){

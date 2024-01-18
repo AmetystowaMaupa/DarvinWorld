@@ -31,4 +31,20 @@ public class Genome {
         }
         len += 1;
     }
+    @Override
+    public String toString() {
+        if (head == null) {
+            return "Empty Genome";
+        }
+
+        StringBuilder result = new StringBuilder();
+        Gene current = head;
+
+        do {
+            result.append(current.getGene()).append(" ");
+            current = current.next;
+        } while (current != head);
+
+        return result.toString().trim();
+    }
 }

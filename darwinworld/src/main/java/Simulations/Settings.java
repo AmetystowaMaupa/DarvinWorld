@@ -15,7 +15,8 @@ public class Settings {
     private final int reproductionLostEnergy;
     private final int genLength;
     private final int numberOfTunnels;
-
+    private final int minimalMutationNumber;
+    private final int maximalMutationNumber;
     private final AbstractWorldMap map;
     private final int animalMoving;
     //private final IGenome mutationVariant;
@@ -31,11 +32,10 @@ public class Settings {
         startAnimalEnergy = Integer.parseInt(config[6]);
         animalFullEnergy = Integer.parseInt(config[7]);
         reproductionLostEnergy = Integer.parseInt(config[8]);
-        int minimalMutationNumber = Integer.parseInt(config[9]);
-        int maximalMutationNumber = Integer.parseInt(config[10]);
+        minimalMutationNumber = Integer.parseInt(config[9]);
+        maximalMutationNumber = Integer.parseInt(config[10]);
         genLength = Integer.parseInt(config[11]);
         numberOfTunnels = Integer.parseInt(config[16]);
-
 
         if (mapWidth <= 0 || mapHeight <= 0) {
             throw new Exception("wrong map dimension");
@@ -66,12 +66,7 @@ public class Settings {
             case "Craziness" -> animalMoving = 1;
             default -> throw new Exception("wrong animalMoving configuration");
         }
-        /*
-        switch (config[13]) {
-            case "Correction" -> mutationVariant = new LittleCorrectionGens();
-            case "Random" -> mutationVariant = new FullRandomGens(maximalMutationNumber, minimalMutationNumber);
-            default -> throw new Exception("wrong mutationVariant configuration");
-        }*/
+
 
         switch (config[15]) {
             case "Earth" -> map = new BasicMap(mapWidth, mapHeight, reproductionLostEnergy);
@@ -132,8 +127,11 @@ public class Settings {
     public int getAnimalMoving() {
         return animalMoving;
     }
-    /*
-    public IGenome getMutationVariant() {
-        return mutationVariant;
-    }*/
+    public int getMinimalMutationNumber() {
+        return minimalMutationNumber;
+    }
+
+    public int getMaximalMutationNumber() {
+        return maximalMutationNumber;
+    }
 }

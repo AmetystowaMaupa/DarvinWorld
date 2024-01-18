@@ -26,7 +26,7 @@ public class ElementInformation {
         stage.setScene(sceneMain);
         stage.setOnCloseRequest(event -> {
             this.stage.hide();
-            //app.setFollowingAnimal(null);
+            app.setFollowingAnimal(null);
         });
         this.needDate = infoDate();
     }
@@ -94,10 +94,10 @@ public class ElementInformation {
         exitButton.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-font-size: 15 pt; -fx-text-fill: #cb3054; -fx-background-color: rgba(8,56,65,0.84);");
         exitButton.setAlignment(Pos.CENTER);
 
-        /*exitButton.setOnAction(action -> {
+        exitButton.setOnAction(action -> {
             this.stage.hide();
             app.setFollowingAnimal(null);
-        });*/
+        });
 
         HBox inputList = new HBox();
         inputList.getChildren().addAll(needDate, listOfInformation);

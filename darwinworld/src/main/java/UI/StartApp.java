@@ -192,8 +192,8 @@ public class StartApp {
     /*public int getDominantGenotype() {
         return engine.getStats().getDominantGenotype();
     }
-
+*/
     public void setFollowingAnimal(Animal followingAnimal) {
         this.followingAnimal = followingAnimal;
-    }*/
+    }
 }

@@ -28,7 +28,23 @@ public class TunnelMap extends AbstractWorldMap{
         }
 
     }
-
+    @Override
+    public void moveAnimals(){
+        for (Animal animal : animalsList){
+            MoveTuple posChange = animal.move(this::moveValidator);
+            Vector2d newCords = calcPosition(posChange.newPosition);
+            Vector2d oldCords = calcPosition(posChange.oldPosition);
+            posChange.setNewPosition(newCords);
+            posChange.setOldPosition(oldCords);
+            Tunnel tunnel = tunnels.get(posChange.newPosition);
+            if (tunnel != null){
+                posChange.setNewPosition(tunnel.otherEntry(newCords));
+                animal.setPosition(tunnel.otherEntry(newCords));
+            }
+            positionChanged(posChange.oldPosition,posChange.newPosition,animal);
+            animal.subEnergy(3);
+        }
+    }
     @Override
     public boolean moveValidator(Vector2d destination){
         return destination.getY() < upperRight.getY() && destination.getY() >= 0;

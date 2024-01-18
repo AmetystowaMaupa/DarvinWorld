@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Animal implements WorldElement {
+public class Animal implements WorldElement,Comparable<Animal> {
     private Vector2d position;
     private int energy;
     private Directions orientation = Directions.N;
@@ -50,34 +50,61 @@ public class Animal implements WorldElement {
         if (domGenesLen + subGenesLen != settings.getGenLength()){
             domGenesLen += 1;
         }
+        int numMutations = r.nextInt(settings.getMaximalMutationNumber()+1) + settings.getMinimalMutationNumber();
+        List<Integer> mutationPoints = new ArrayList<>();
+        for (int i = 0; i < numMutations; i++){
+            mutationPoints.add(r.nextInt(settings.getGenLength()));
+        }
         Gene p = father1.genome.getHead();
         Gene q = father2.genome.getHead();
         if (left){
             for (int i = 0; i < domGenesLen; i++){
-                genome.addGene(p.getGene());
+                if (!mutationPoints.contains(i)) {
+                    genome.addGene(p.getGene());
+                }
+                else {
+                    genome.addGene(r.nextInt(8));
+                }
                 p = p.next;
                 q = q.next;
             }
             for (int i = 0; i < subGenesLen; i++){
-                genome.addGene(q.getGene());
+                if (!mutationPoints.contains(i)){
+                    genome.addGene(q.getGene());
+                }
+                else {
+                    genome.addGene(r.nextInt(8));
+                }
                 q = q.next;
             }
         }
         else {
             for (int i = 0; i < subGenesLen; i++){
-                genome.addGene(q.getGene());
+                if (!mutationPoints.contains(i)){
+                    genome.addGene(q.getGene());
+                }
+                else {
+                    genome.addGene(r.nextInt(8));
+                }
                 p = p.next;
                 q = q.next;
             }
             for (int i = 0; i < domGenesLen; i++){
-                genome.addGene(p.getGene());
+                if (!mutationPoints.contains(i)) {
+                    genome.addGene(p.getGene());
+                }
+                else {
+                    genome.addGene(r.nextInt(8));
+                }
                 p = p.next;
             }
         }
         this.currGene = genome.getHead();
+        father1.energy -= settings.getReproductionLostEnergy();
+        father2.energy -= settings.getReproductionLostEnergy();
     }
-    public boolean subEnergy(){
-        energy -= 1;
+    public boolean subEnergy(int val){
+        energy -= val;
         return energy < 0 ? true : false;
     }
     public MoveTuple move(MoveValidator validator){
@@ -119,6 +146,9 @@ public class Animal implements WorldElement {
             }
         }
     }
+    public void setPosition(Vector2d pos){
+        position = pos;
+    }
     @Override
     public String toString(){
         return orientation.toString();
@@ -159,5 +189,10 @@ public class Animal implements WorldElement {
     @Override
     public int getActiveGenome() {
         return currGene.getGene();
+    }
+
+    @Override
+    public int compareTo(Animal o) {
+        return Integer.compare(o.getEnergy(),this.getEnergy());
     }
 }

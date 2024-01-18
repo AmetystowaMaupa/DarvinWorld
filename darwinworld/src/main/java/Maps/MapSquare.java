@@ -53,6 +53,7 @@ public class MapSquare {
 
     public void placeObject(Animal object) {
         objects.add(object);
+        objects.sort(Animal::compareTo);
     }
 
     public void animalDie(WorldElement animal) {

@@ -53,7 +53,7 @@ public class Vector2d {
     public Vector2d opposite() {
         return new Vector2d(-x, -y);
     }
-
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;

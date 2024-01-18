@@ -90,61 +90,19 @@ public class CreateMap {
 
                     int howMany = square.getObjects().size();
                     for (Animal animal : square.getObjects()) {
-//                        switch (animal.getImageIdx()) {
-//                            case 5 -> imageView = new ImageView(images.Image5);
-//                            case 4 -> imageView = new ImageView(images.Image4);
-//                            case 3 -> imageView = new ImageView(images.Image3);
-//                            case 2 -> imageView = new ImageView(images.Image2);
-//                            case 1 -> imageView = new ImageView(images.Image1);
-//                            default -> throw new IllegalStateException("Unexpected value: ");
-//                        }
-                        imageView = new ImageView(images.Image1);
-                        double imageHeight = 500 / (1.5 * size * howMany);
-                        double imageWidth = 600 / (1.5 * size * howMany);
-                        Circle animalVis = new Circle(min(imageHeight,imageWidth)/2);
-                        animalVis.setFill(Color.hsb(0,1.0,(double) animal.getEnergy() / (double) animal.getSettings().getAnimalFullEnergy()));
-                        imageView.setFitHeight(imageHeight);
-                        imageView.setFitWidth(imageWidth);
+                        double imageHeight = 500 / (1.5 * size);
+                        double imageWidth = 600 / (1.5 * size);
+                        Circle animalVis = new Circle(imageHeight/2);
+                        animalVis.setFill(Color.hsb(0,1.0,(double) (animal.getEnergy() > 0 ? animal.getEnergy() : 0 )/ (double) animal.getSettings().getAnimalFullEnergy()));
                         Label posit = new Label(position.toString());
                         posit.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-text-fill: #b0b0b0; -fx-background-color: rgba(9,1,1,0.84);");
                         posit.setFont(Font.font(20 / (0.2 * size)));
-
-                        ElementBox picturesAnimal = new ElementBox(animal, engine);
-
-                        double Height = 500 / (1.5 * size);
-                        double Width = 600 / (1.5 * size);
-                        imageView.setFitHeight(Height);
-                        imageView.setFitWidth(Width);
 
                         VBox box = new VBox(3, animalVis, posit);
                         box.setAlignment(Pos.CENTER);
 
                         gridPane.add(box,i,j);
                         GridPane.setHalignment(box, Pos.CENTER.getHpos());
-                        /*ProgressBar lifeBar = picturesAnimal.energyInAnimal();
-                        lifeBar.setPrefHeight(80 / (size));
-                        lifeBar.setPrefWidth(600 / (1.5 * size * howMany));
-                        lifeBar.setMinHeight(10);
-                        HBox lifeAndPosition = new HBox(lifeBar, posit);
-
-                        Label live = new Label(String.format("%.2f%%", lifeBar.getProgress() * 100));
-                        live.setVisible(false);
-                        live.setStyle("-fx-font-family: 'Bauhaus 93'; -fx-text-fill: #30cbc8; -fx-background-color: rgba(8,56,65,0.84);");*/
-
-                        //StackPane stackPane = new StackPane(imageView, live);
-                        //stackPane.setOnMouseEntered(event -> live.setVisible(true));
-                        //stackPane.setOnMouseExited(event -> live.setVisible(false));
-
-                        //if (animal.getActiveGenome() == app.getDominantGenotype()) {
-                          //  stackPane.setStyle("-fx-border-width: 3; -fx-border-color: #33e30d;");
-                        //}
-
-                        //setButtonOnAction(stackPane, (Animal) animal, engine);
-
-                        //VBox box = new VBox(stackPane, lifeAndPosition);
-                        //box.setAlignment(Pos.CENTER);
-
-                        //hbox.getChildren().addAll(box, posit);
                     }
 
                     gridPane.add(hbox, i, j);

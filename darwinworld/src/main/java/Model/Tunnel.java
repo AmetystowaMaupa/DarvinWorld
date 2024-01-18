@@ -33,7 +33,14 @@ public class Tunnel implements WorldElement{
     }
 
 
-
+    public Vector2d otherEntry(Vector2d entry){
+        if (entry.getY() == entry1.getY() && entry.getX() == entry1.getX()){
+            return entry2;
+        }
+        else{
+            return entry1;
+        }
+    }
 
     @Override
     public String toString() {

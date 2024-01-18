@@ -46,7 +46,7 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
             }
         }
     }
-    private Vector2d calcPosition(Vector2d position){
+    protected Vector2d calcPosition(Vector2d position){
         return new Vector2d(position.getX() >= 0 ? position.getX() % upperRight.getX() : upperRight.getX() + (position.getX() % upperRight.getX()), position.getY());
     }
 
@@ -59,7 +59,7 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
             posChange.setNewPosition(newCords);
             posChange.setOldPosition(oldCords);
             positionChanged(posChange.oldPosition,posChange.newPosition,animal);
-            animal.subEnergy();
+            animal.subEnergy(3);
         }
     }
     public void eatGrassAnimals(){
@@ -84,7 +84,8 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
         }
         for (Animal animal : toRemove){
             animalsList.remove(animal);
-            elements.get(animal.getPosition()).getObjects().remove(animal);
+            elements.get(calcPosition(animal.getPosition())).getObjects().remove(animal);
+            animalsNumber -= 1;
             animalsDead += 1;
         }
     }
@@ -132,26 +133,24 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
     }
 
     public void animalsReproduce(int day){
-        Set<Vector2d> alreadyReproduced = new HashSet<>();
-        List<Animal> newBabies = new ArrayList<>();
-        for (Animal animal : animalsList){
-            Vector2d position = calcPosition(animal.getPosition());
-            if (elements.get(position) != null && elements.get(position).getObjects() != null && !alreadyReproduced.contains(position) && elements.get(position).getObjects().size() > 1){
-                Animal animal1 = elements.get(position).strongest();
-                Animal animal2 = elements.get(position).secondStrongest();
-                alreadyReproduced.add(position);
-                Animal baby = new Animal(animal1, animal2, day);
-                newBabies.add(baby);
+        for (int i = 0; i < upperRight.getX(); i++){
+            for (int j = 0; j < upperRight.getY(); j++){
+                Vector2d position = new Vector2d(i,j);
+                if (elements.get(position).getObjects().size() > 1){
+                    Animal strongest = elements.get(position).strongest();
+                    Animal secondStronges = elements.get(position).secondStrongest();
+                    Animal baby = new Animal (strongest,secondStronges,day);
+                    place(baby);
+                    strongest.subEnergy(strongest.getSettings().getReproductionLostEnergy());
+                    secondStronges.subEnergy(secondStronges.getSettings().getReproductionLostEnergy());
+                }
             }
-        }
-        for (Animal baby : newBabies){
-            place(baby);
         }
     }
 
     @Override
     public void place(Animal object) {
-        Vector2d position = object.getPosition();
+        Vector2d position = calcPosition(object.getPosition());
         if (inMap(position)) {
             elements.get(position).placeObject(object);
             animalsNumber += 1;
@@ -163,8 +162,10 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
 
     private void addGrass(Vector2d position) {
         MapSquare square = elements.get(position);
-        square.growGrass();
-        grassNumber += 1;
+        if (!square.isTunnel()) {
+            square.growGrass();
+            grassNumber += 1;
+        }
     }
 
 
@@ -190,8 +191,6 @@ public abstract class AbstractWorldMap implements WorldMap, ElementChangeObserve
     private boolean isGrass(Vector2d position) {
         return elements.get(position).didGrassGrow();
     }
-
-    //private boolean isTunnel(Vector2d position) {return elements.get(position).}
 
     public void eatGrass(Animal animal) {
         Vector2d position = calcPosition(animal.getPosition());

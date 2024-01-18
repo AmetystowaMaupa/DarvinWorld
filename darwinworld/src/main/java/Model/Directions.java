@@ -11,10 +11,10 @@ public enum Directions {
     NW;
     public Vector2d dirToVector(){
         return switch (this){
-            case N -> new Vector2d(0,1);
-            case W -> new Vector2d(1,0);
-            case S -> new Vector2d(0,-1);
-            case E -> new Vector2d(-1,0);
+            case N -> new Vector2d(0,-1);
+            case W -> new Vector2d(-1,0);
+            case S -> new Vector2d(0,1);
+            case E -> new Vector2d(1,0);
             case NE -> N.dirToVector().add(E.dirToVector());
             case SE -> S.dirToVector().add(E.dirToVector());
             case SW -> S.dirToVector().add(W.dirToVector());
